@@ -104,7 +104,7 @@ Version: 1.0
                 <div class="cat-item px-1 py-3">
                     <a id="${categories[i].name}${i}" onclick="categorySelect('${categories[i].name}','${i}')" class="bg-white rounded d-block p-2 text-center shadow-sm" href="javascript:void(0)">
                     <img alt="#" src="${ getCategoryImagePath(categories[i].name) }" class="img-fluid mb-2">
-                        <p class="m-0 small">${getFirstLetterMayus(categories[i].name)}</p>
+                        <p class="m-0 small fw-bold">${getFirstLetterMayus(categories[i].name)}</p>
                     </a>
                 </div>
             `;
@@ -117,13 +117,14 @@ Version: 1.0
             let allProductsHTML = '';
             products = data;
 
-            for (var i = 0; i < products.length; i++) {
+            // Load products into inventory
+            products.forEach((product) => {
                 trendingHTML += `
-                <div class="slider-item" id="${products[i].name}">
+                <div class="slider-item" id="${ product.name }">
                     <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                         <div class="list-card-image">
                             <div class="star position-absolute"><span class="badge badge-success">
-                                <i class="feather-star"></i>  ${getRandomFloat()} (${getRandomOrders()}+)</span>
+                                <i class="feather-star"></i>  ${ getRandomFloat() }(${ getRandomOrders() }+)</span>
                             </div>
                             <div class="favourite-heart text-danger position-absolute">
                                 <a href="#"><i class="feather-heart"></i></a>
@@ -132,21 +133,24 @@ Version: 1.0
                                 <span class="badge badge-dark">Promocionado</span>
                             </div>
                             <a href="#">
-                                <img alt="#" src="${products[i].url_image}" class="img-fluid item-img trending-item-img w-100">
+                            ${  product.url_image 
+                                ? `<img alt="#" src="${ product.url_image }" class="img-fluid item-img w-100">`
+                                : `<img alt="#" src="img/default-product.png" class="img-fluid item-img w-100" style="background-color:#EDF3F7">`
+                            }
                             </a>
                         </div>
                         <div class="p-3 position-relative">
                             <div class="list-card-body">
                                 <h6 class="mb-1">
-                                    <a href="#" class="text-black">${products[i].name}</a>
+                                    <a href="#" class="text-black">${ product.name }</a>
                                 </h6>
-                                <p class="text-gray mb-3">• ${ getCategoryNameById(products[i].category) }</p>
+                                <p class="text-gray mb-3">• ${ getCategoryNameById(product.category) }</p>
                                 <p class="text-gray mb-3 time">
-                                    ${ products[i].discount > 0 
-                                        ?  `<span class="badge badge-success fs-12"><i class="feather-gift mr-2"></i>Oferta -${products[i].discount}% descuento</span>` 
+                                    ${ product.discount > 0 
+                                        ?  `<span class="badge badge-success fs-12"><i class="feather-gift mr-2"></i>Oferta -${ product.discount }% descuento</span>` 
                                         : `<span class="badge badge-primary fs-12"><i class="feather-truck mr-2"></i>Delivery gratuito</span>`
                                     }
-                                    <span class="float-right text-black-50 fs-15 fw-bold"> $${ products[i].price.toLocaleString('es-CL') } CLP</span>
+                                    <span class="float-right text-black-50 fs-15 fw-bold"> $${ product.price.toLocaleString('es-CL') } CLP</span>
                                 </p>
                             </div>
                         </div>
@@ -155,29 +159,29 @@ Version: 1.0
                 `;
 
                 allProductsHTML += `
-                        <div class="col-md-3 pb-3 product-card ${getCategoryNameById(products[i].category).replace(/\s/g, "")}" id="${products[i].name}">
+                        <div class="col-md-3 pb-3 product-card ${ getCategoryNameById(product.category).replace(/\s/g, "") }" id="${ product.nam }">
                             <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
                                 <div class="list-card-image">
                                     <div class="star position-absolute"><span class="badge badge-success">
-                                        <i class="feather-star"></i>  ${getRandomFloat()} (${getRandomOrders()}+)</span>
+                                        <i class="feather-star"></i>  ${ getRandomFloat() } ( ${ getRandomOrders() } +)</span>
                                     </div>
                                     <div class="favourite-heart text-danger position-absolute">
                                         <a href="#"><i class="feather-heart"></i></a>
                                     </div>
                                     <a href="#">
-                                    ${  products[i].url_image 
-                                        ? `<img alt="#" src="${products[i].url_image}" class="img-fluid item-img w-100">`
-                                        : `<img alt="#" src="img/default-product.png" class="img-fluid item-img w-100" style="background-color:#EDF3F7">`
+                                    ${  product.url_image 
+                                        ? `<img alt="" src="${ product.url_image }" class="img-fluid item-img w-100">`
+                                        : `<img alt="" src="img/default-product.png" class="img-fluid item-img w-100" style="background-color:#EDF3F7">`
                                     }
-                                        <img alt="#" src="${products[i].url_image ? products[i].url_image : 'img/default-product.png'}" class="img-fluid item-img w-100">
+                                        <img alt="#" src="${ product.url_image ? product.url_image : 'img/default-product.png' }" class="img-fluid item-img w-100">
                                     </a>
                                 </div>
                                 <div class="p-3 position-relative">
                                     <div class="list-card-body">
                                         <h6 class="mb-1">
-                                            <a href="#" class="text-black">${products[i].name}</a>
+                                            <a href="#" class="text-black">${ product.name }</a>
                                         </h6>
-                                        <p class="text-gray mb-1 small">• ${ getCategoryNameById(products[i].category) }</p>
+                                        <p class="text-gray mb-1 small">• ${ getCategoryNameById(product.category) }</p>
                                         <p class="text-gray mb-1 rating">
                                         </p>
                                         <ul class="rating-stars list-unstyled">
@@ -192,17 +196,19 @@ Version: 1.0
                                         <p></p>
                                     </div>
                                     <p class="text-gray mb-3 time">
-                                        ${ products[i].discount > 0 
-                                            ?  `<span class="badge badge-success"><i class="feather-gift mr-1"></i>Oferta -${products[i].discount}%</span>` 
+                                        ${ product.discount > 0 
+                                            ?  `<span class="badge badge-success"><i class="feather-gift mr-1"></i>Oferta -${ product.discount }%</span>` 
                                             : `<span class="badge badge-primary"><i class="feather-truck mr-1"></i>Delivery gratuito</span>`
                                         }
-                                        <span class="float-right text-black-50 fs-15 fw-bold"> $${ products[i].price.toLocaleString('es-CL') } CLP</span>
+                                        <span class="float-right text-black-50 fs-15 fw-bold"> $${ product.price.toLocaleString('es-CL') } CLP</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
                 `
-            }
+            });
+
+
             $('.loader').hide();
             document.getElementById('total-products').innerText = 'Total de productos: ' + products.length;
             $('.trending-slider').append(trendingHTML);

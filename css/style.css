@@ -4,7 +4,6 @@ Author: Ignacio Corball
 Version: 1.0
 */
 
-
 /*
 -- Body
 -- Fixed Bottom
@@ -651,6 +650,10 @@ p {
 
 .list-card.d-flex .list-card-body span.float-right.text-black-50 {
     display: none;
+}
+
+.fw-bold{
+    font-weight: 700;
 }
 
 .rating-stars .feather-star {
